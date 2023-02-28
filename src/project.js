@@ -9,7 +9,7 @@ const projectFactory = (name, tagColor, idNum) => {
   };
   const getIDNum = () => idNum;
   const setIDNum = (newIDNum) => {
-    idNUM = newIDNum;
+    idNum = newIDNum;
   };
 
   return {

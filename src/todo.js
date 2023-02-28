@@ -1,6 +1,6 @@
 const todoFactory = (name, description, dueDate) => {
   const priority = false;
-  const projectTag = null;
+  const projectID = null;
   const isDone = false;
   const getName = () => name;
   const setName = (newName) => {
@@ -26,9 +26,9 @@ const todoFactory = (name, description, dueDate) => {
   const togglePriority = () => {
     dueDate = !dueDate;
   };
-  const getProjectTag = () => projectTag;
-  const setProjectTag = (newProjectTag) => {
-    projectTag = newProjectTag;
+  const getProjectID = () => projectID;
+  const setProjectID = (newProjectID) => {
+    projectID = newProjectID;
   };
   const getIsDone = () => isDone;
   const setDone = () => {
@@ -49,8 +49,8 @@ const todoFactory = (name, description, dueDate) => {
     isOverdue,
     getPriority,
     togglePriority,
-    getProjectTag,
-    setProjectTag,
+    getProjectID,
+    setProjectID,
     getIsDone,
     setDone,
     setNotDone,

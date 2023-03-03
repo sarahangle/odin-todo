@@ -2,7 +2,7 @@ import todoFactory from './todo';
 import projectFactory from './project';
 
 const database = () => {
-  const todos = [];
+  const todos = {};
   const projects = [];
   // Creates a project based on some user input for name and color. Returns project object.
   const createProject = (name, tagColor) => {
@@ -16,10 +16,10 @@ const database = () => {
   // is found, and false if project is not found. Return value is not related to finding or deleting
   // todo items.
   const deleteProject = (searchIDNum) => {
-    for (let j = 0; j < todos.length; j += 1) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const j in todos) {
       if (todos[j].projectID === searchIDNum) {
-        projects.splice(j, 1);
-        j -= 1;
+        delete todos[j];
       }
     }
     for (let i = 0; i < projects.length; i += 1) {
@@ -39,6 +39,18 @@ const database = () => {
   const assignTodoToProject = () => {
 
   };
+  const findProjectByID = () => {
+
+  };
+  const findTodosByID = () => {
+
+  };
+  const findTodosByDueDate = () => {
+
+  };
+  const sortTodos = () => {
+
+  };
   return {
     todos,
     projects,
@@ -47,15 +59,9 @@ const database = () => {
     createTodo,
     deleteTodo,
     assignTodoToProject,
+    findProjectByID,
+    findTodosByID,
+    findTodosByDueDate,
+    sortTodos,
   };
 };
-
-const dataFilter = (() => {
-  const findProjectByID = (projects, idNum) => {};
-  const findTodosByID = (todos, idNum) => {};
-  const findTodosByDueDate = (dueDate) => {};
-})();
-
-const dataSort = (() => {
-  const sortTodos = () => {};
-})();

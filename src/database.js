@@ -3,13 +3,16 @@ import projectFactory from './project';
 
 const database = () => {
   const todos = {};
-  const projects = [];
+  const projects = {};
+  let latestTodoIDNum = 0;
+  let latestProjectIDNum = 10000;
   // Creates a project based on some user input for name and color. Returns project object.
   const createProject = (name, tagColor) => {
     // Need a way to choose/assign idNums for projects and avoid collissions (hash?)
-    const idNum = 0;
+    latestProjectIDNum += 1;
+    const idNum = latestProjectIDNum;
     const newProject = projectFactory(name, tagColor, idNum);
-    projects.push(newProject);
+    projects[idNum] = newProject;
     return newProject;
   };
   // Deletes project as well as all todo items belonging to project. Will return true if project
@@ -17,36 +20,72 @@ const database = () => {
   // todo items.
   const deleteProject = (searchIDNum) => {
     // eslint-disable-next-line no-restricted-syntax
-    for (const j in todos) {
-      if (todos[j].projectID === searchIDNum) {
-        delete todos[j];
+    for (const i in todos) {
+      if (todos[i].getProjectID() === searchIDNum) {
+        delete todos[i];
       }
     }
-    for (let i = 0; i < projects.length; i += 1) {
-      if (projects[i].idNum === searchIDNum) {
-        projects.splice(i, 1);
-        return true;
-      }
+    if (searchIDNum in projects) {
+      delete projects[searchIDNum];
+      return true;
     }
     return false;
   };
-  const createTodo = () => {
-
+  // Creates a project based on some user input for name and color. Returns project object.
+  const createTodo = (name, description, dueDate) => {
+    // Need a way to choose/assign idNums for todos and avoid collissions (hash?)
+    latestTodoIDNum += 1;
+    const idNum = latestTodoIDNum;
+    const newTodo = todoFactory(name, description, dueDate, idNum);
+    todos[idNum] = newTodo;
+    return newTodo;
   };
-  const deleteTodo = () => {
-
+  // Deletes todo item. Will return true if todo is found, and false if todo is not found.
+  const deleteTodo = (searchIDNum) => {
+    if (searchIDNum in todos) {
+      delete todos[searchIDNum];
+      return true;
+    }
+    return false;
   };
-  const assignTodoToProject = () => {
-
+  const assignTodoToProject = (projectID, todoID) => {
+    if (todoID in todos) {
+      todos[todoID].setProjectID(projectID);
+      return true;
+    }
+    return false;
   };
-  const findProjectByID = () => {
-
+  const findProjectByID = (searchIDNum) => {
+    if (searchIDNum in projects) {
+      return projects[searchIDNum];
+    }
+    return false;
   };
-  const findTodosByID = () => {
-
+  const findTodoByID = (searchIDNum) => {
+    if (searchIDNum in todos) {
+      return todos[searchIDNum];
+    }
+    return false;
   };
-  const findTodosByDueDate = () => {
-
+  const findTodosByProjectID = (projectID) => {
+    const theseTodos = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const i in todos) {
+      if (todos[i].getProjectID() === projectID) {
+        theseTodos.push(todos[i]);
+      }
+    }
+    return theseTodos;
+  };
+  const findTodosByDueDate = (dueDate) => {
+    const theseTodos = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const i in todos) {
+      if (todos[i].getDueDate() === dueDate) {
+        theseTodos.push(todos[i]);
+      }
+    }
+    return theseTodos;
   };
   const sortTodos = () => {
 
@@ -60,8 +99,11 @@ const database = () => {
     deleteTodo,
     assignTodoToProject,
     findProjectByID,
-    findTodosByID,
+    findTodoByID,
+    findTodosByProjectID,
     findTodosByDueDate,
     sortTodos,
   };
 };
+
+export default database;

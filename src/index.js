@@ -1,16 +1,26 @@
 import './style.css';
-import todoFactory from './todo';
-import projectFactory from './project';
-import database from './database';
+import { makeSidebar, clickToday } from './SidebarManager';
 
-const todo1 = todoFactory('Laundry', 'Do my laundry', '1/1/1');
-console.log(todo1.getPriority());
-todo1.togglePriority();
-console.log(todo1.getPriority());
+const toggleNav = () => {
+  if (document.getElementById('sidebar').style.width === '0px') {
+    document.getElementById('sidebar').style.width = '250px';
+  } else {
+    document.getElementById('sidebar').style.width = '0px';
+  }
+};
 
-const data = database();
-data.createProject('A', 'blue');
-data.createProject('B', 'green');
-console.log(data.projects);
-console.log(data.projects[0].getName());
-console.log(data.projects[1].getName());
+// Build header, sidebar, and open content box for actual displayed tasks
+const makeHeader = () => {
+  const headerNode = document.getElementById('header');
+  headerNode.appendChild(document.createElement('button'));
+  headerNode.lastChild.classList.add('material-icons', 'openbtn');
+  headerNode.lastChild.onclick = toggleNav;
+  headerNode.lastChild.textContent = 'menu';
+  headerNode.appendChild(document.createElement('div'));
+  headerNode.lastChild.setAttribute('id', 'logo');
+  headerNode.lastChild.textContent = 'My TODO';
+};
+
+makeHeader();
+makeSidebar();
+clickToday();

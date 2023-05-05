@@ -4,10 +4,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToDo</title>
+    <title>ToDo Tracker</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 </head>
 <body>
-    <div id="content">hello world</div>
+    <div id="header"></div>
+    <div id="core">
+        <div id="sidebar">
+            <div>HOME</div>
+            <ul>
+                <li class="sidebarBtn" id="todayBtn">
+                    <span class="material-icons">calendar_today</span>
+                    <div>Today's Tasks</div>
+                </li>
+                <li class="sidebarBtn" id="priorityBtn">
+                    <span class="material-icons">star</span>
+                    <div>Priority Tasks</div>
+                </li>
+            </ul>
+            <div>PROJECTS</div>
+            <ul id="ProjectList"></ul>
+            <li class="sidebarBtn" id="newProjectBtn">
+                <span class="material-icons">add</span>
+                <div>New Project</div>
+            </li>
+        </div>
+        <div id="content"></div>
+    </div>
+    <div id="footer"></div>
+    <div class="modal" id="modal1">
+        <div class="modal-card" id="modal-card1">
+        </div>
+    </div>
+    <div class="modal" id="modal2">
+        <div class="modal-card" id="modal-card2"></div>
+    </div>
 </body>
 <script src="main.js"></script>
 </html>

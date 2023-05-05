@@ -1,3 +1,4 @@
+import { isToday } from 'date-fns';
 import todoFactory from './todo';
 import projectFactory from './project';
 
@@ -31,12 +32,13 @@ const database = () => {
     }
     return false;
   };
-  // Creates a project based on some user input for name and color. Returns project object.
-  const createTodo = (name, description, dueDate) => {
+  // Creates a todo based on user input for name, description, duedate, and projectID.
+  // Returns todo object.
+  const createTodo = (name, description, dueDate, projectID, priority) => {
     // Need a way to choose/assign idNums for todos and avoid collissions (hash?)
     latestTodoIDNum += 1;
     const idNum = latestTodoIDNum;
-    const newTodo = todoFactory(name, description, dueDate, idNum);
+    const newTodo = todoFactory(name, description, dueDate, projectID, priority, idNum);
     todos[idNum] = newTodo;
     return newTodo;
   };
@@ -77,18 +79,25 @@ const database = () => {
     }
     return theseTodos;
   };
-  const findTodosByDueDate = (dueDate) => {
+  const findTodosDueToday = () => {
     const theseTodos = [];
     // eslint-disable-next-line no-restricted-syntax
     for (const i in todos) {
-      if (todos[i].getDueDate() === dueDate) {
+      if (isToday(todos[i].getDueDate())) {
         theseTodos.push(todos[i]);
       }
     }
     return theseTodos;
   };
-  const sortTodos = () => {
-
+  const findTodosPriority = () => {
+    const theseTodos = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const i in todos) {
+      if ((todos[i].getPriority()) === true) {
+        theseTodos.push(todos[i]);
+      }
+    }
+    return theseTodos;
   };
   return {
     todos,
@@ -101,8 +110,8 @@ const database = () => {
     findProjectByID,
     findTodoByID,
     findTodosByProjectID,
-    findTodosByDueDate,
-    sortTodos,
+    findTodosDueToday,
+    findTodosPriority,
   };
 };
 

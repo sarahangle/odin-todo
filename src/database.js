@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { isToday } from 'date-fns';
 import todoFactory from './todo';
 import projectFactory from './project';
@@ -38,7 +39,7 @@ const database = () => {
     // Need a way to choose/assign idNums for todos and avoid collissions (hash?)
     latestTodoIDNum += 1;
     const idNum = latestTodoIDNum;
-    const newTodo = todoFactory(name, description, dueDate, projectID, priority, idNum);
+    const newTodo = todoFactory(name, description, dueDate, projectID, priority, idNum, false);
     todos[idNum] = newTodo;
     return newTodo;
   };
@@ -99,6 +100,24 @@ const database = () => {
     }
     return theseTodos;
   };
+  const reconstituteTodo = ([name, description, dueDateString, projectID, priority, idNum, isDone]) => {
+    const dueDate = new Date(Date.parse(dueDateString));
+    const newTodo = todoFactory(name, description, dueDate, projectID, priority, idNum, isDone);
+    todos[idNum] = newTodo;
+  };
+  const reconstituteProject = ([name, tagColor, idNum]) => {
+    const newProject = projectFactory(name, tagColor, idNum);
+    projects[idNum] = newProject;
+  };
+  const getLatestProjectID = () => latestProjectIDNum;
+  const setLatestProjectID = (num) => {
+    latestProjectIDNum = num;
+  };
+  const getLatestTodoID = () => latestTodoIDNum;
+  const setLatestTodoID = (num) => {
+    latestTodoIDNum = num;
+  };
+
   return {
     todos,
     projects,
@@ -112,6 +131,12 @@ const database = () => {
     findTodosByProjectID,
     findTodosDueToday,
     findTodosPriority,
+    reconstituteTodo,
+    reconstituteProject,
+    getLatestProjectID,
+    setLatestProjectID,
+    getLatestTodoID,
+    setLatestTodoID,
   };
 };
 

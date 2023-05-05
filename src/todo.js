@@ -1,5 +1,4 @@
-const todoFactory = (name, description, dueDate, projectID, priority, idNum) => {
-  let isDone = false;
+const todoFactory = (name, description, dueDate, projectID, priority, idNum, isDone) => {
   const getName = () => name;
   const setName = (newName) => {
     name = newName;

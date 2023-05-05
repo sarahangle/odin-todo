@@ -1,4 +1,4 @@
-import data from './DataManager';
+import { data, sendAllToLocalStorage } from './DataManager';
 
 let current = 0;
 
@@ -29,6 +29,8 @@ const newTodoSubmit = (evt) => {
   // Hide modal
   const modal = document.getElementById('modal2');
   modal.style.display = 'none';
+
+  sendAllToLocalStorage();
 };
 
 const togglePriority = (evt) => {
@@ -39,6 +41,7 @@ const togglePriority = (evt) => {
   todo.togglePriority();
 
   openCurrent();
+  sendAllToLocalStorage();
 };
 
 const toggleDone = (evt) => {
@@ -49,6 +52,7 @@ const toggleDone = (evt) => {
   todo.toggleDone();
 
   openCurrent();
+  sendAllToLocalStorage();
 };
 
 const deleteTodo = (evt) => {
@@ -59,6 +63,7 @@ const deleteTodo = (evt) => {
   data.deleteTodo(todo.getIDNum());
 
   openCurrent();
+  sendAllToLocalStorage();
 };
 
 const createCardForTodo = (todo) => {

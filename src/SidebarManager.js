@@ -1,10 +1,11 @@
-import data from './DataManager';
+import { data, sendAllToLocalStorage } from './DataManager';
 import {
   openToday, openPriority, openProject,
 } from './ContentManager';
 
 const projectBarSetup = () => {
   const projectListNode = document.getElementById('ProjectList');
+  projectListNode.innerHTML = '';
 
   // eslint-disable-next-line no-restricted-syntax
   for (const project of Object.values(data.projects)) {
@@ -60,6 +61,7 @@ const newProjectSetup = () => {
   form.lastChild.setAttribute('value', 'Create Project');
 
   const modalCardNode = document.getElementById('modal-card1');
+  modalCardNode.innerHTML = '';
   modalCardNode.appendChild(form);
 };
 
@@ -138,6 +140,8 @@ const newProjectSubmit = (evt) => {
   clearSidebarStyles();
   openProject(newProject.getIDNum());
   addButtonStyle(newProjectLi);
+
+  sendAllToLocalStorage();
 };
 
 const makeEventListeners = () => {
@@ -161,6 +165,7 @@ const makeSidebar = () => {
   projectBarSetup();
   newProjectSetup();
   makeEventListeners();
+  sendAllToLocalStorage();
 };
 
 export {
